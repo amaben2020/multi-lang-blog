@@ -21,7 +21,7 @@ export const DUMMY_POSTS: Post[] = [
     description:
       "Paris is the capital and most populous city of France. It is located on the Seine River, in the north of the country, at the heart of the Île-de-France region.",
     category: { id: "1", title: "Cities" },
-    author: { id: "1", first_name: "John", last_name: "Doe" },
+    author: { id: "1", first_name: "Benneth", last_name: "Uzor" },
     slug: "the-vibrant-city-of-paris",
     image:
       "https://images.unsplash.com/photo-1448906654166-444d494666b3?ixid=MnwzODU2NTF8MHwxfHNlYXJjaHwyNXx8bG9uZG9ufGVufDB8fHx8MTY3MDI3MzM3Ng&ixlib=rb-4.0.3",
@@ -77,7 +77,7 @@ export const DUMMY_POSTS: Post[] = [
     description:
       "Thailand is a country in Southeast Asia. It is known for its tropical beaches, opulent royal palaces, ancient ruins, and ornate temples displaying figures of Buddha.",
     category: { id: "2", title: "Experiences" },
-    author: { id: "1", first_name: "John", last_name: "Doe" },
+    author: { id: "1", first_name: "Cynthia", last_name: "Doe" },
     slug: "joining-the-elephants-in-the-wild-thailand",
     image:
       "https://images.unsplash.com/photo-1585970480901-90d6bb2a48b5?ixid=MnwzODU2NTF8MHwxfHNlYXJjaHwxOHx8RWxlcGhhbnRzJTIwdGhhaWxhbmR8ZW58MHx8fHwxNjcwMzIyNzUx&ixlib=rb-4.0.3",

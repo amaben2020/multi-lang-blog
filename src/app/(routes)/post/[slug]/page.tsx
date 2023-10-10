@@ -1,5 +1,11 @@
 import { DUMMY_POSTS } from "@/mock/data";
 
+export const generateStaticParams = async () => {
+  return DUMMY_POSTS.map((post) => ({
+    slug: post.slug,
+  }));
+};
+
 const Post = ({
   params,
 }: {
@@ -7,9 +13,8 @@ const Post = ({
     slug: string;
   };
 }) => {
-  const singlePost = DUMMY_POSTS.find((post) =>
-    post.slug.includes(params.slug),
-  );
+  const { slug } = params;
+  const singlePost = DUMMY_POSTS.find((post) => post.slug.includes(slug));
 
   // const singlePost2 =
   //   DUMMY_POSTS[DUMMY_POSTS.findIndex((elem) => elem.slug === params.slug)];
