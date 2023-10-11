@@ -23,7 +23,10 @@ const Category = async ({ params }: { params: { category: string } }) => {
     }
   };
 
-  const category = await fetchCategory();
+  const category = (await fetchCategory()) as unknown as {
+    title: string;
+    description: string;
+  }[];
 
   if (!category) {
     notFound();
