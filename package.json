@@ -10,6 +10,8 @@
   },
   "dependencies": {
     "@directus/sdk": "^10.3.5",
+    "@tailwindcss/typography": "^0.5.10",
+    "html-react-parser": "^4.2.2",
     "lucide-react": "^0.284.0",
     "next": "13.5.4",
     "react": "^18",

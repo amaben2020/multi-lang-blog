@@ -2,6 +2,24 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+  .wysiwyg h1 {
+    @apply text-5xl leading-loose;
+  }
+  .wysiwyg h2 {
+    @apply text-3xl leading-loose;
+  }
+  .wysiwyg h3 {
+    @apply text-2xl leading-loose;
+  }
+  .wysiwyg p {
+    @apply text-lg leading-snug;
+  }
+
+  .wysiwyg img {
+    @apply rounded-lg;
+  }
+}
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
