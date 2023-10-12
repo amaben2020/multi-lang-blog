@@ -1,12 +1,10 @@
+import { i18n } from "@/i18n";
 import { match as matchLocale } from "@formatjs/intl-localematcher";
 import Negotiator from "negotiator";
 import { NextRequest, NextResponse } from "next/server";
-import { i18n } from "./i18n";
 
 function getLocale(request: NextRequest) {
   const negotiatorHeaders = {};
-
-  console.log("request from browser", request);
 
   //@ts-ignore
   request.headers.forEach((value, key) => (negotiatorHeaders[key] = value));
@@ -14,8 +12,6 @@ function getLocale(request: NextRequest) {
   const languages = new Negotiator({ headers: negotiatorHeaders }).languages();
 
   const locale = matchLocale(languages, i18n.locales, i18n.defaultLocale);
-
-  console.log("LOCALE", locale);
   return locale;
 }
 
