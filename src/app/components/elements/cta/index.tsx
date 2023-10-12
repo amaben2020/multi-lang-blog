@@ -2,7 +2,7 @@ import directus from "@/src/app/lib/directus";
 import { revalidateTag } from "next/cache";
 
 const CTA = async () => {
-  async function handleFormAction(formData: FormData) {
+  async function handleSubscription(formData: FormData) {
     "use server";
 
     const email = formData.get("email");
@@ -26,9 +26,11 @@ const CTA = async () => {
       );
 
       const response = await count.json();
-      console.log(response);
+
       return response.meta.total_count;
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   const subscribersCount = await fetchSubscribersCount();
@@ -39,7 +41,7 @@ const CTA = async () => {
 
       <form
         key={subscribersCount + "subscribers-count"}
-        action={handleFormAction}
+        action={handleSubscription}
         className="flex flex-col space-y-4"
       >
         <input
