@@ -10,14 +10,17 @@
   },
   "dependencies": {
     "@directus/sdk": "^10.3.5",
+    "@formatjs/intl-localematcher": "^0.4.2",
     "@tailwindcss/typography": "^0.5.10",
     "html-react-parser": "^4.2.2",
     "lucide-react": "^0.284.0",
+    "negotiator": "^0.6.3",
     "next": "13.5.4",
     "react": "^18",
     "react-dom": "^18"
   },
   "devDependencies": {
+    "@types/negotiator": "^0.6.1",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",

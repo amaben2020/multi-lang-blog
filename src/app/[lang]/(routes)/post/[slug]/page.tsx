@@ -1,4 +1,4 @@
-import directus from "@/src/app/lib/directus";
+import directus from "@/src/app/[lang]/lib/directus";
 import parse, { Element, HTMLReactParserOptions } from "html-react-parser";
 import Image from "next/image";
 import { notFound } from "next/navigation";

@@ -1,4 +1,4 @@
-import directus from "@/src/app/lib/directus";
+import directus from "@/src/app/[lang]/lib/directus";
 import { revalidateTag } from "next/cache";
 
 const CTA = async () => {
@@ -6,6 +6,21 @@ const CTA = async () => {
     "use server";
 
     const email = formData.get("email");
+
+    // check if the email is already in db
+    // const emailInDB = await directus.items("subscribe").readByQuery({
+    //   filter: {
+    //     email: {
+    //       _eq: email,
+    //     },
+    //   },
+    //   fields: ["email"],
+    // });
+
+    // console.log("emailInDB", emailInDB);
+    // throw error if is
+
+    // create if it isnt
 
     await directus.items("subscriber").createOne({
       email,
