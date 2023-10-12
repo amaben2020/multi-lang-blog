@@ -1,5 +1,6 @@
 import directus from "@/src/app/lib/directus";
-import parse from "html-react-parser";
+import parse, { HTMLReactParserOptions, Element } from "html-react-parser";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 
 export const generateStaticParams = async () => {
@@ -16,7 +17,32 @@ export const generateStaticParams = async () => {
   }));
 };
 
-const renderBody = (body: any) => parse(body);
+const options: HTMLReactParserOptions = {
+  replace: (domNode: any) => {
+    if (
+      domNode.attribs &&
+      domNode.name === "img" &&
+      domNode instanceof Element
+    ) {
+      const { src, alt } = domNode.attribs;
+      console.dir(domNode.name, { depth: null });
+      console.dir(domNode.attribs, { depth: null });
+      return (
+        <Image
+          src={src}
+          alt={alt}
+          height={1280}
+          width={640}
+          className="rounded-md w-full object-center my-3 h-auto max-h-[300px] md:max-h-[500px]"
+        />
+      );
+    }
+  },
+};
+
+console.log(options);
+
+const renderBody = (body: any) => parse(body, options);
 
 const Post = async ({
   params,
