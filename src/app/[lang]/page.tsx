@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import CTA from "./components/elements/cta";
+import { getLanguageFromDictionary } from "./lib/dictionary";
 import directus from "./lib/directus";
 
 export default async function Home({
@@ -55,9 +56,13 @@ export default async function Home({
           </>
         ))}
       </div>
-
       <div>
         <CTA />
+
+        <footer>
+          Title :{" "}
+          {(await getLanguageFromDictionary(params.lang)).footer.mainText}
+        </footer>
       </div>
     </main>
   );
