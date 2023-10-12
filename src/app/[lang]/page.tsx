@@ -61,7 +61,10 @@ export default async function Home({
 
         <footer>
           Title :{" "}
-          {(await getLanguageFromDictionary(params.lang)).footer.mainText}
+          {
+            (await getLanguageFromDictionary(params.lang as "en" | "de")).footer
+              .mainText
+          }
         </footer>
       </div>
     </main>
