@@ -1,6 +1,6 @@
 import { DUMMY_POSTS } from "@/mock/data";
 import { notFound } from "next/navigation";
-import directus from "../../lib/directus";
+import directus from "../../../lib/directus";
 
 export const generateStaticParams = async () => {
   try {

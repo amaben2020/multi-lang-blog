@@ -1,10 +1,17 @@
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import CTA from "./components/elements/cta";
-import directus from "./lib/directus";
+import CTA from "../components/elements/cta";
+import directus from "../lib/directus";
 
-export default async function Home() {
+export default async function Home({
+  params,
+}: {
+  params: {
+    lang: string;
+  };
+}) {
+  console.log(params.lang);
   const getAllPosts = async () => {
     try {
       const posts = await directus.items("post").readByQuery({
