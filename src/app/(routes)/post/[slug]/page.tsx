@@ -1,5 +1,5 @@
 import directus from "@/src/app/lib/directus";
-import parse, { HTMLReactParserOptions, Element } from "html-react-parser";
+import parse, { Element, HTMLReactParserOptions } from "html-react-parser";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 
@@ -25,6 +25,7 @@ const options: HTMLReactParserOptions = {
       domNode instanceof Element
     ) {
       const { src, alt } = domNode.attribs;
+
       console.dir(domNode.name, { depth: null });
       console.dir(domNode.attribs, { depth: null });
       return (
