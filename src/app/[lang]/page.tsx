@@ -7,6 +7,10 @@ import directus from "./lib/directus";
 
 // TODO: use get static params for {lang: "", slug: ""}
 
+export function generateStaticParams() {
+  return [{ lang: "en" }, { lang: "de" }];
+}
+
 export default async function Home({
   params,
 }: {
@@ -14,8 +18,8 @@ export default async function Home({
     lang: string;
   };
 }) {
+  // TODO: Move to services
   const getAllPosts = async () => {
-    console.log("PARAMS", params.lang);
     try {
       if (params.lang === "en") {
         const posts = await directus.items("post").readByQuery({
@@ -33,7 +37,7 @@ export default async function Home({
         const translatedPosts = await directus.items("post").readByQuery({
           fields: ["translations.*"],
         });
-        return translatedPosts?.data.map((post) => {
+        return translatedPosts?.data?.map((post) => {
           return {
             id: post.translations[0].id,
             post_id: post.translations[0].post_id,
@@ -51,8 +55,6 @@ export default async function Home({
   };
 
   const posts = await getAllPosts();
-
-  console.dir(posts, { depth: null });
 
   if (!posts) {
     notFound();
