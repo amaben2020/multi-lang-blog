@@ -38,7 +38,7 @@ export default async function Home({
         const translatedPosts = await directus.items("post").readByQuery({
           fields: ["translations.*"],
         });
-        console.log("translated posts", translatedPosts.data[0].translations);
+
         return translatedPosts?.data?.map((post) => {
           return {
             id: post.translations[0].id,
