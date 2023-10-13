@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import CTA from "./components/elements/cta";
-import { getLanguageFromDictionary } from "./lib/dictionary";
+// import { getLanguageFromDictionary } from "./lib/dictionary";
 import directus from "./lib/directus";
 
 // TODO: use get static params for {lang: "", slug: ""}
@@ -31,12 +31,14 @@ export default async function Home({
             "author.last_name",
             "category.id",
             "category.title",
+            "category.slug",
           ],
         });
+        console.log(posts.data);
         return posts.data;
       } else {
         const translatedPosts = await directus.items("post").readByQuery({
-          fields: ["translations.*"],
+          fields: ["translations.*", "category.translations.slug"],
         });
 
         return translatedPosts?.data?.map((post) => {
@@ -48,11 +50,15 @@ export default async function Home({
             slug: post.translations[0].slug,
             body: post.translations[0].body,
             title: post.translations[0].title,
+            category: {
+              slug: post.category.translations[0].slug,
+              title: post.category.translations[0].slug,
+            },
           };
         });
       }
     } catch (error) {
-      console.log(error);
+      console.log("ERROR", error);
     }
   };
 
@@ -69,7 +75,7 @@ export default async function Home({
           <>
             <Link
               className="border mx-5 p-10 rounded-lg max-w-[300px]"
-              href={`/${params.lang}/${post?.slug}`}
+              href={`/${params.lang}/${post?.category?.slug}`}
               key={post.id}
             >
               {post.title}
@@ -88,10 +94,10 @@ export default async function Home({
 
         <footer>
           Title :{" "}
-          {
+          {/* {
             (await getLanguageFromDictionary(params.lang as "en" | "de")).footer
               .mainText
-          }
+          } */}
         </footer>
       </div>
     </main>
