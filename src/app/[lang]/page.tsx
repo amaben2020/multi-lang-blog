@@ -1,3 +1,4 @@
+import { i18n } from "@/i18n";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -8,7 +9,7 @@ import directus from "./lib/directus";
 // TODO: use get static params for {lang: "", slug: ""}
 
 export function generateStaticParams() {
-  return [{ lang: "en" }, { lang: "de" }];
+  return i18n.locales.map((locale) => ({ lang: locale }));
 }
 
 export default async function Home({
@@ -37,6 +38,7 @@ export default async function Home({
         const translatedPosts = await directus.items("post").readByQuery({
           fields: ["translations.*"],
         });
+        console.log("translated posts", translatedPosts.data[0].translations);
         return translatedPosts?.data?.map((post) => {
           return {
             id: post.translations[0].id,
@@ -67,7 +69,7 @@ export default async function Home({
           <>
             <Link
               className="border mx-5 p-10 rounded-lg max-w-[300px]"
-              href={`/${post?.category?.title.toLowerCase()}`}
+              href={`/${params.lang}/${post?.slug}`}
               key={post.id}
             >
               {post.title}
