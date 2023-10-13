@@ -5,6 +5,8 @@ import CTA from "./components/elements/cta";
 import { getLanguageFromDictionary } from "./lib/dictionary";
 import directus from "./lib/directus";
 
+// TODO: use get static params for {lang: "", slug: ""}
+
 export default async function Home({
   params,
 }: {
@@ -12,24 +14,45 @@ export default async function Home({
     lang: string;
   };
 }) {
-  console.log(params.lang);
   const getAllPosts = async () => {
+    console.log("PARAMS", params.lang);
     try {
-      const posts = await directus.items("post").readByQuery({
-        fields: [
-          "*",
-          "author.id",
-          "author.first_name",
-          "author.last_name",
-          "category.id",
-          "category.title",
-        ],
-      });
-      return posts.data;
-    } catch (error) {}
+      if (params.lang === "en") {
+        const posts = await directus.items("post").readByQuery({
+          fields: [
+            "*",
+            "author.id",
+            "author.first_name",
+            "author.last_name",
+            "category.id",
+            "category.title",
+          ],
+        });
+        return posts.data;
+      } else {
+        const translatedPosts = await directus.items("post").readByQuery({
+          fields: ["translations.*"],
+        });
+        return translatedPosts?.data.map((post) => {
+          return {
+            id: post.translations[0].id,
+            post_id: post.translations[0].post_id,
+            languages_code: post.translations[0].languages_code,
+            description: post.translations[0].description,
+            slug: post.translations[0].slug,
+            body: post.translations[0].body,
+            title: post.translations[0].title,
+          };
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const posts = await getAllPosts();
+
+  console.dir(posts, { depth: null });
 
   if (!posts) {
     notFound();
