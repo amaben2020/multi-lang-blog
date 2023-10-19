@@ -2,8 +2,9 @@ import { i18n } from "@/i18n";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { cache } from "react";
 import CTA from "./components/elements/cta";
-// import { getLanguageFromDictionary } from "./lib/dictionary";
+import { getLanguageFromDictionary } from "./lib/dictionary";
 import directus from "./lib/directus";
 
 // TODO: use get static params for {lang: "", slug: ""}
@@ -11,6 +12,19 @@ import directus from "./lib/directus";
 export function generateStaticParams() {
   return i18n.locales.map((locale) => ({ lang: locale }));
 }
+
+export const generateMetadata = async ({
+  params,
+}: {
+  params: { lang: "en" | "de" };
+}) => {
+  const info = await getLanguageFromDictionary(params.lang);
+
+  return {
+    title: info.header.title,
+    description: info.header.description,
+  };
+};
 
 export default async function Home({
   params,
@@ -20,7 +34,7 @@ export default async function Home({
   };
 }) {
   // TODO: Move to services
-  const getAllPosts = async () => {
+  const getAllPosts = cache(async () => {
     try {
       if (params.lang === "en") {
         const posts = await directus.items("post").readByQuery({
@@ -34,7 +48,7 @@ export default async function Home({
             "category.slug",
           ],
         });
-        console.log(posts.data);
+
         return posts.data;
       } else {
         const translatedPosts = await directus.items("post").readByQuery({
@@ -60,7 +74,7 @@ export default async function Home({
     } catch (error) {
       console.log("ERROR", error);
     }
-  };
+  });
 
   const posts = await getAllPosts();
 
@@ -94,10 +108,10 @@ export default async function Home({
 
         <footer>
           Title :{" "}
-          {/* {
+          {
             (await getLanguageFromDictionary(params.lang as "en" | "de")).footer
               .mainText
-          } */}
+          }
         </footer>
       </div>
     </main>

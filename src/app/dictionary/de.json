@@ -1,4 +1,8 @@
 {
+  "header": {
+    "title": "Willkommen im mehrsprachigen Blog",
+    "description": "Diese Website versucht, das Problem der Übersetzung von Englisch nach Deutsch zu lösen"
+  },
   "footer": {
     "mainText": "Ich spreche bisen deutche"
   }
