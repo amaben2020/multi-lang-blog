@@ -1,7 +1,11 @@
 {
   "header": {
     "title": "Willkommen im mehrsprachigen Blog",
-    "description": "Diese Website versucht, das Problem der Übersetzung von Englisch nach Deutsch zu lösen"
+    "description": "Diese Website versucht, das Problem der Übersetzung von Englisch nach Deutsch zu lösen",
+    "category": {
+      "cities": "staedte",
+      "experiences": "erfahrungen"
+    }
   },
   "footer": {
     "mainText": "Ich spreche bisen deutche"

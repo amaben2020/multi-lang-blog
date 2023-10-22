@@ -22,6 +22,8 @@ const Category = async ({
     notFound();
   }
 
+  console.log(category);
+
   return (
     <div>
       Category :{category[0]?.title}

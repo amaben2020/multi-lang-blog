@@ -1,7 +1,11 @@
 {
   "header": {
     "title": "Welcome to multi language blog",
-    "description": "This site seeks to solve the problem of converting from english to deutche"
+    "description": "This site seeks to solve the problem of converting from english to deutche",
+    "category": {
+      "cities": "cities",
+      "experiences": "experiences"
+    }
   },
   "footer": {
     "mainText": "Welcome to my lang"
