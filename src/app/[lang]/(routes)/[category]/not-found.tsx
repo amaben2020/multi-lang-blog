@@ -16,6 +16,7 @@ export default function NotFound() {
           height={400}
           alt=""
           className="border bg-white rounded-md"
+          priority
         />
       </Link>
     </div>

@@ -36,6 +36,7 @@ const options: HTMLReactParserOptions = {
           height={1280}
           width={640}
           className="rounded-md w-full object-center my-3 h-auto max-h-[300px] md:max-h-[500px]"
+          priority
         />
       );
     }

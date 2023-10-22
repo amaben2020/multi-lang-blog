@@ -100,6 +100,7 @@ export default async function Home({
                 alt=""
                 width={300}
                 height={640}
+                priority
               />
             </Link>
           </>
