@@ -23,6 +23,9 @@ export const generateMetadata = async ({
   return {
     title: info.header.title,
     description: info.header.description,
+    alternates: {
+      canonical: `${process.env.NEXT_PUBLIC_SITE_URL}/${params.lang}`,
+    },
   };
 };
 
