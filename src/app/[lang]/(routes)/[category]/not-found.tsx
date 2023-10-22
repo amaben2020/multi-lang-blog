@@ -1,6 +1,8 @@
+import notFound from "@/public/not-found.png";
 import Image from "next/image";
 import Link from "next/link";
-import notFound from "./../../../../../public/not-found.png";
+
+//not-found.js components do not accept any props.
 export default function NotFound() {
   return (
     <div className="border m-10 p-10 flex justify-center flex-col items-center gap-6">
