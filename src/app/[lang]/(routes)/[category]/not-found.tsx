@@ -7,7 +7,7 @@ export default function NotFound() {
   return (
     <div className="border m-10 p-10 flex justify-center flex-col items-center gap-6">
       <h2>Not Found</h2>
-      <p>Could not find requested resource</p>
+      <p>Could not find requested resource.</p>
 
       <Link href="/">
         <Image
