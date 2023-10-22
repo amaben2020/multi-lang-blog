@@ -59,10 +59,12 @@ const CTA = async () => {
         action={handleSubscription}
         className="flex flex-col space-y-4"
       >
+        <label id="aria-email">Email</label>
         <input
           type="text"
           name="email"
           className="rounded-md shadow-md p-3 text-black"
+          aria-labelledby="aria-email"
         />
         <button type="submit" className="border p-4 rounded-md w-1/2 mx-auto">
           {" "}
