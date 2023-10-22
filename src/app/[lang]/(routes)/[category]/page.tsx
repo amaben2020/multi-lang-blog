@@ -1,9 +1,36 @@
 import { DirectusService } from "@/src/app/services/api/directus";
 import { notFound } from "next/navigation";
 import { cache } from "react";
+import directus from "../../lib/directus";
 
 const { getCategories } = new DirectusService();
-export const fetchCategoryData = cache(getCategories);
+const fetchCategoryData = cache(getCategories);
+
+export async function generateStaticParams() {
+  const categories = await directus.items("category").readByQuery({
+    filter: {
+      status: {
+        _eq: "published",
+      },
+    },
+
+    fields: ["slug", "translations*"],
+  });
+
+  const params = categories.data?.map((category) => ({
+    slug: category.slug,
+    lang: "en",
+  }));
+
+  console.log(categories);
+
+  const localizedParams = categories.data?.map((category) => ({
+    slug: category.slug,
+    lang: "de",
+  }));
+
+  return params?.concat(localizedParams!) ?? [];
+}
 
 const Category = async ({
   params,
@@ -21,8 +48,6 @@ const Category = async ({
   if (!category) {
     notFound();
   }
-
-  console.log(category);
 
   return (
     <div>

@@ -2,7 +2,6 @@ import directus from "./../../../app/[lang]/lib/directus";
 
 export class DirectusService {
   async getCategories(category: string, lang: "en" | "de") {
-    console.log(lang);
     try {
       const categoryData = await directus.items("category").readByQuery({
         filter: {
@@ -13,7 +12,6 @@ export class DirectusService {
         fields: ["*", "translations.*", "category.translations.*"],
       });
 
-      console.log("categoryData", categoryData);
       if (lang == "en") {
         return categoryData.data;
       } else if (lang == "de") {
