@@ -1,56 +1,29 @@
 import { notFound } from "next/navigation";
+import { cache } from "react";
 import directus from "../../lib/directus";
 
-// export const generateStaticParams = async () => {
-//   try {
-//     const category: Awaited<any> = await directus
-//       .items("category")
-//       .readByQuery({
-//         filter: {
-//           status: {
-//             _eq: "published",
-//           },
-//         },
-//       });
-
-//     return category.data?.map((category: any) => ({
-//       category: `en/${category.slug}`,
-//     }));
-//   } catch (error) {
-//     console.log(error);
-//   }
-// };
-
-const Category = async ({
-  params,
-}: {
-  params: { category: string; lang: string };
-}) => {
-  const fetchCategory = async () => {
+export const fetchCategoryData = cache(
+  async (category: string, lang: "en" | "de") => {
     try {
-      const category = await directus.items("category").readByQuery({
+      const categoryData = await directus.items("category").readByQuery({
         filter: {
           slug: {
-            _eq: params.category,
+            _eq: category,
           },
         },
 
         fields: ["*", "translations.*", "category.translations.*"],
       });
-      if (params.lang == "en") {
-        return category.data;
-      } else if (params.lang == "de") {
+      if (lang == "en") {
+        return categoryData.data;
+      } else if (lang == "de") {
         const deutcheCategory = await directus.items("category").readByQuery({
           fields: ["*", "translations.*", "category.translations.*"],
         });
 
-        console.log(deutcheCategory?.data);
-
-        // TODO: look for how to resolve this with query
+        // TODO: look for how to resolve this with query rather than JS
         return deutcheCategory?.data
-          ?.filter(
-            (category) => category.translations[0].slug === params.category,
-          )
+          ?.filter((category) => category.translations[0].slug === category)
           .map((category) => ({
             id: category.translations[0].id,
             title: category.translations[0].title,
@@ -61,9 +34,18 @@ const Category = async ({
     } catch (error) {
       console.log(error);
     }
-  };
+  },
+);
 
-  const category = (await fetchCategory()) as unknown as {
+const Category = async ({
+  params,
+}: {
+  params: { category: string; lang: "en" | "de" };
+}) => {
+  const category = (await fetchCategoryData(
+    params.category,
+    params.lang,
+  )) as unknown as {
     title: string;
     description: string;
   }[];
@@ -71,8 +53,6 @@ const Category = async ({
   if (!category) {
     notFound();
   }
-
-  console.log("Category", category);
 
   return (
     <div>
