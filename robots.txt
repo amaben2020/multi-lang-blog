@@ -1,8 +1,4 @@
-
-# Block all crawlers for /accounts
-User-agent: *
-Disallow: /accounts
-
-# Allow all crawlers
-User-agent: *
+User-Agent: *
+Disallow: /private/
 Allow: /
+Sitemap: https://multi-lang-blog.vercel.app/sitemap.xml
