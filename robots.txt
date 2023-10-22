@@ -1,4 +1,5 @@
 User-Agent: *
 Disallow: /private/
 Allow: /
+
 Sitemap: https://multi-lang-blog.vercel.app/sitemap.xml
