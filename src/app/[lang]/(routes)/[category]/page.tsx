@@ -43,7 +43,7 @@ const Category = async ({
     description: string;
   }[];
 
-  if (!category) {
+  if (!category[0]?.title) {
     notFound();
   }
 
