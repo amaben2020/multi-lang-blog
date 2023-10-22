@@ -37,6 +37,20 @@ export class DirectusService {
       console.log(error);
     }
   }
+
+  async getCategoriesForSlug() {
+    const categories = await directus.items("category").readByQuery({
+      fields: ["slug", "translations.*"],
+    });
+
+    return {
+      categoriesEn: categories.data?.map((category) => ({
+        slug: category.slug,
+        lang: "en",
+      })),
+      categories,
+    };
+  }
   async getCategory() {}
   async getPosts() {}
   async getPost() {}

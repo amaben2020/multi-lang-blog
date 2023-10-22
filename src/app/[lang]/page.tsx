@@ -6,7 +6,6 @@ import { cache } from "react";
 import CTA from "./components/elements/cta";
 import { getLanguageFromDictionary } from "./lib/dictionary";
 import directus from "./lib/directus";
-
 // TODO: use get static params for {lang: "", slug: ""}
 
 export function generateStaticParams() {

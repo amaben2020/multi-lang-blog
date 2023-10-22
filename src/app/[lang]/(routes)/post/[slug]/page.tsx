@@ -2,6 +2,7 @@ import directus from "@/src/app/[lang]/lib/directus";
 import parse, { Element, HTMLReactParserOptions } from "html-react-parser";
 import Image from "next/image";
 import { notFound } from "next/navigation";
+import Script from "next/script";
 
 export const generateStaticParams = async () => {
   const post = await directus.items("post").readByQuery({
@@ -76,8 +77,21 @@ const Post = async ({
 
   if (!singlePost) notFound();
 
+  const jsonLD = {
+    "@context": singlePost[0].title,
+    "@id": singlePost[0]?.id,
+    body: renderBody(singlePost[0].body),
+  };
+
   return (
-    <div className="p-10">
+    <section className="p-10">
+      <Script
+        id={singlePost[0]?.id}
+        dangerouslySetInnerHTML={{
+          __html: jsonLD,
+        }}
+      />
+
       <h2>{singlePost[0]?.title}</h2>
 
       <div className="prose wysiwyg">
@@ -86,7 +100,7 @@ const Post = async ({
       </div>
 
       <button className="btn-primary">OK</button>
-    </div>
+    </section>
   );
 };
 

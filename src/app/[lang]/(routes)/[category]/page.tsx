@@ -1,20 +1,12 @@
 import { DirectusService } from "@/src/app/services/api/directus";
 import { notFound } from "next/navigation";
 import { cache } from "react";
-import directus from "../../lib/directus";
 
-const { getCategories } = new DirectusService();
+const { getCategories, getCategoriesForSlug } = new DirectusService();
 const fetchCategoryData = cache(getCategories);
 
 export async function generateStaticParams() {
-  const categories = await directus.items("category").readByQuery({
-    fields: ["slug", "translations.*"],
-  });
-
-  const params = categories.data?.map((category) => ({
-    slug: category.slug,
-    lang: "en",
-  }));
+  const { categoriesEn, categories } = await getCategoriesForSlug();
 
   let deutscheConfig: Array<{ lang: "de"; slug: string }> = [];
 
@@ -27,7 +19,7 @@ export async function generateStaticParams() {
     });
   });
 
-  return params?.concat(deutscheConfig!) ?? [];
+  return categoriesEn?.concat(deutscheConfig!) ?? [];
 }
 
 const Category = async ({
