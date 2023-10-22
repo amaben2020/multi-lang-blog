@@ -8,13 +8,7 @@ const fetchCategoryData = cache(getCategories);
 
 export async function generateStaticParams() {
   const categories = await directus.items("category").readByQuery({
-    filter: {
-      status: {
-        _eq: "published",
-      },
-    },
-
-    fields: ["slug", "translations*"],
+    fields: ["slug", "translations.*"],
   });
 
   const params = categories.data?.map((category) => ({
@@ -22,14 +16,18 @@ export async function generateStaticParams() {
     lang: "en",
   }));
 
-  console.log(categories);
+  let deutscheConfig: Array<{ lang: "de"; slug: string }> = [];
 
-  const localizedParams = categories.data?.map((category) => ({
-    slug: category.slug,
-    lang: "de",
-  }));
+  categories?.data?.forEach((category) => {
+    category.translations.forEach((item: any) => {
+      deutscheConfig.push({
+        lang: "de",
+        slug: item.slug,
+      });
+    });
+  });
 
-  return params?.concat(localizedParams!) ?? [];
+  return params?.concat(deutscheConfig!) ?? [];
 }
 
 const Category = async ({
