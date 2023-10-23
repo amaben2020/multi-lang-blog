@@ -1,29 +1,31 @@
-//@ts-nocheck
-"use client";
+// "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
 import { getLanguageFromDictionary } from "../../../lib/dictionary";
+import { TLanguageData } from "./types";
 
-const Navigation = ({ locale }: { locale: "en" | "de" }) => {
-  const [isMounted, setIsMounted] = useState(false);
-  const [languageData, setLanguageData] = useState(null);
+const Navigation = async ({ locale }: { locale: "en" | "de" }) => {
+  // const [isMounted, setIsMounted] = useState(false);
+  // const [languageData, setLanguageData] = useState<TLanguageData>({
+  //   header: {
+  //     title: "",
+  //     description: "",
+  //     category: {
+  //       cities: "",
+  //       experiences: "",
+  //     },
+  //   },
+  //   footer: {
+  //     mainText: "",
+  //   },
+  // });
 
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
-
-  if (!isMounted) {
-    return null;
-  }
-
-  // get the pathname
-  // const pathname = usePathname();
-
-  // console.log(pathname);
-  // switch and change the url based on the locale
+  // useEffect(() => {
+  //   setIsMounted(true);
+  // }, []);
 
   const languageSwitcher = () => {
+    // ensure that when the language is switched on any path, it simply appends to it rather than bring you back to home route
     if (locale === "en") {
       return "de";
     } else {
@@ -31,16 +33,19 @@ const Navigation = ({ locale }: { locale: "en" | "de" }) => {
     }
   };
 
-  getLanguageFromDictionary(locale).then((res) => setLanguageData(res.header));
+  const languageData: TLanguageData = await getLanguageFromDictionary(locale);
 
+  // if (!isMounted) {
+  //   return null;
+  // }
   const links = [
     {
-      title: languageData?.category.cities,
-      url: `/${locale}/${languageData?.category.cities}`,
+      title: languageData?.header?.category?.cities,
+      url: `/${locale}/${languageData?.header?.category.cities}`,
     },
     {
-      title: languageData?.category.experiences,
-      url: `/${locale}/${languageData?.category.experiences}`,
+      title: languageData?.header?.category.experiences,
+      url: `/${locale}/${languageData?.header?.category.experiences}`,
     },
   ];
 
@@ -55,15 +60,19 @@ const Navigation = ({ locale }: { locale: "en" | "de" }) => {
         </Link>
       </div>
 
-      <div className="flex justify-around text-white">
-        {links.map((elem) => (
-          <div key={elem.title}>
-            <Link href={elem.url} className="mx-4">
+      {languageData.header && (
+        <div className="flex justify-around">
+          {links?.map((elem) => (
+            <Link
+              key={elem.title}
+              href={elem.url}
+              className="mx-4 cursor-pointer hover:text-gray-300 border p-2 rounded-xl text-white text-2xl max-w-[180px] text-center"
+            >
               {elem.title}
             </Link>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
     </nav>
   );
 };

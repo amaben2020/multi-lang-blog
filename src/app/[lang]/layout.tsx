@@ -21,8 +21,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang={params.lang}>
-      <Navigation locale={params.lang} />
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <Navigation locale={params.lang} />
+        {children}
+      </body>
     </html>
   );
 }
